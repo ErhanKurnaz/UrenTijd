@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="UrenTijd.ui.DayFields"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:UrenTijd.ui"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             FontFamily="{DynamicResource MaterialDesignFont}">
+    <StackPanel Margin="16, 0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource MaterialDesignHeadline4TextBlock}" Text="{Binding DayName}" Grid.Column="0" />
+            <CheckBox IsChecked="True" Content="Gewerkt" Grid.Column="1" x:Name="worked" />
+        </Grid>
+        <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,24,0,0">Heen</TextBlock>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">Van</TextBlock>
+            <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">Tot</TextBlock>
+            <materialDesign:TimePicker Is24Hours="True" Grid.Row="1" Grid.Column="0" Width="100" x:Name="GoFrom" />
+            <materialDesign:TimePicker Is24Hours="True" Grid.Row="1" Grid.Column="1" Width="100" x:Name="GoUntil" />
+        </Grid>
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,24,0,0">Werk</TextBlock>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">Van</TextBlock>
+            <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">Tot</TextBlock>
+            <materialDesign:TimePicker Is24Hours="True" Grid.Row="1" Grid.Column="0" Width="100" x:Name="WorkFrom" />
+            <materialDesign:TimePicker Is24Hours="True" Grid.Row="1" Grid.Column="1" Width="100" x:Name="WorkUntil" />
+        </Grid>
+        <TextBox x:Name="WorkDescription" materialDesign:HintAssist.Hint="Omschrijving" Margin="48,16,48,0" />
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,24,0,0">Terug</TextBlock>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">Van</TextBlock>
+            <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">Tot</TextBlock>
+            <materialDesign:TimePicker Is24Hours="True" Grid.Row="1" Grid.Column="0" Width="100" x:Name="BackFrom" />
+            <materialDesign:TimePicker Is24Hours="True" Grid.Row="1" Grid.Column="1" Width="100" x:Name="BackUntil" />
+        </Grid>
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+        <TextBox x:Name="WorkType" materialDesign:HintAssist.Hint="Soort werk" Margin="0,16,0,0" />
+    </StackPanel>
+</UserControl>

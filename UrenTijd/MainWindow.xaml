@@ -3,10 +3,43 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:UrenTijd.ui"
         xmlns:local="clr-namespace:UrenTijd"
         mc:Ignorable="d"
-        Title="UrenTijd" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="UrenTijd" Height="450" Width="800"
+        MinHeight="200"
+        MinWidth="400"
+		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:UserControl="clr-namespace:UrenTijd.ui"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <materialDesign:Card Padding="32" Margin="48">
+                <StackPanel>
+                    <Controls:DayFields DayName="Maandag" x:Name="Monday" />
+                    <Controls:DayFields DayName="Dinsdag" x:Name="Tuesday" Margin="0, 24, 0, 0" />
+                    <Controls:DayFields DayName="Woensdag" x:Name="Wednesday" Margin="0, 24, 0, 0" />
+                    <Controls:DayFields DayName="Donderdag" x:Name="Thursday" Margin="0, 24, 0, 0" />
+                    <Controls:DayFields DayName="Vrijdag" x:Name="Friday" Margin="0, 24, 0, 0" />
+                    <Controls:DayFields DayName="Zaterdag" x:Name="Saturday" Margin="0, 24, 0, 0" />
+                    <Controls:DayFields DayName="Zondag" x:Name="Sunday" Margin="0, 24, 0, 0" />
+                    <Grid Width="124" Margin="0, 48, 0, 0" HorizontalAlignment="Right">
+                        <Button
+                            Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                            Height="50"
+                            materialDesign:ButtonAssist.CornerRadius="25"
+                            ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Margin="0,0,0,-0.4" VerticalAlignment="Bottom" Click="Send"
+                        >
+                            <materialDesign:PackIcon Kind="EmailSend" Width="24" Height="24" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+		    </materialDesign:Card>
+	    </Grid>
+    </ScrollViewer>
 </Window>
