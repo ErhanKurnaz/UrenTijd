@@ -61,6 +61,8 @@ namespace UrenTijd
             days[4] = ConvertToDayFields(Friday);
             days[5] = ConvertToDayFields(Saturday);
             days[6] = ConvertToDayFields(Sunday);
+
+            Utils.CreateExcel(days);
         }
     }
 }

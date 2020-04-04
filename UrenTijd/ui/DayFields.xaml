@@ -56,7 +56,7 @@
             <materialDesign:TimePicker Is24Hours="True" Grid.Row="1" Grid.Column="0" Width="100" x:Name="WorkFrom" />
             <materialDesign:TimePicker Is24Hours="True" Grid.Row="1" Grid.Column="1" Width="100" x:Name="WorkUntil" />
         </Grid>
-        <TextBox x:Name="WorkDescription" materialDesign:HintAssist.Hint="Omschrijving" Margin="48,16,48,0" />
+        <TextBox x:Name="WorkDescription" materialDesign:HintAssist.Hint="Omschrijving" Margin="0,16,0,0" />
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
         <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,24,0,0">Terug</TextBlock>
         <Grid>
