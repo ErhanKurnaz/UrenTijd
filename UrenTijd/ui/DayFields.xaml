@@ -14,17 +14,7 @@
              TextOptions.TextRenderingMode="Auto"
              FontFamily="{DynamicResource MaterialDesignFont}">
     <StackPanel Margin="16, 0">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="3*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Style="{StaticResource MaterialDesignHeadline4TextBlock}" Text="{Binding DayName}" Grid.Column="0" />
-            <CheckBox IsChecked="True" Content="Gewerkt" Grid.Column="1" x:Name="worked" />
-        </Grid>
+        <TextBlock Style="{StaticResource MaterialDesignHeadline4TextBlock}" Text="{Binding DayName}" />
         <TextBlock Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,24,0,0">Heen</TextBlock>
         <Grid>
             <Grid.RowDefinitions>

@@ -17,29 +17,62 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <Grid>
-            <materialDesign:Card Padding="32" Margin="48">
-                <StackPanel>
-                    <Controls:DayFields DayName="Maandag" x:Name="Monday" />
-                    <Controls:DayFields DayName="Dinsdag" x:Name="Tuesday" Margin="0, 24, 0, 0" />
-                    <Controls:DayFields DayName="Woensdag" x:Name="Wednesday" Margin="0, 24, 0, 0" />
-                    <Controls:DayFields DayName="Donderdag" x:Name="Thursday" Margin="0, 24, 0, 0" />
-                    <Controls:DayFields DayName="Vrijdag" x:Name="Friday" Margin="0, 24, 0, 0" />
-                    <Controls:DayFields DayName="Zaterdag" x:Name="Saturday" Margin="0, 24, 0, 0" />
-                    <Controls:DayFields DayName="Zondag" x:Name="Sunday" Margin="0, 24, 0, 0" />
-                    <Grid Width="124" Margin="0, 48, 0, 0" HorizontalAlignment="Right">
-                        <Button
-                            Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                            Height="50"
-                            materialDesign:ButtonAssist.CornerRadius="25"
-                            ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Margin="0,0,0,-0.4" VerticalAlignment="Bottom" Click="Send"
-                        >
-                            <materialDesign:PackIcon Kind="EmailSend" Width="24" Height="24" />
-                        </Button>
-                    </Grid>
-                </StackPanel>
-		    </materialDesign:Card>
-	    </Grid>
-    </ScrollViewer>
+    <materialDesign:DialogHost IsOpen="{Binding ShowingError}">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel>
+                <TextBlock Style="{StaticResource MaterialDesignTextBlock}" Text="Kan bestand niet opslaan omdat u het bestand ergens anders open heeft staan!&#x0a;Sluit het bestand en probeer het opnieuw" />
+                <Button
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                    Height="50"
+                    Width="75"
+                    HorizontalAlignment="Center"
+                    materialDesign:ButtonAssist.CornerRadius="25"
+                    Click="CloseDialog">
+                    Ok
+                </Button>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <materialDesign:Card Padding="32" Margin="48">
+                    <StackPanel>
+                        <TextBlock Text="De week van" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="16, 0" />
+                        <Grid Margin="16, 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="3*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox materialDesign:HintAssist.Hint="Weeknummer" Text="{Binding WorkWeek, Mode=TwoWay}" Grid.Row="0" Grid.Column="0" />
+                            <TextBox materialDesign:HintAssist.Hint="Jaar" Text="{Binding WorkYear, Mode=TwoWay}" Grid.Row="1" Grid.Column="0" />
+                            <TextBlock Grid.Column="1" Text="Yes" x:Name="workWeekBlock" />
+                        </Grid>
+                        <Controls:DayFields DayName="Maandag" x:Name="Monday" Margin="0, 24, 0, 0" />
+                        <Controls:DayFields DayName="Dinsdag" x:Name="Tuesday" Margin="0, 24, 0, 0" />
+                        <Controls:DayFields DayName="Woensdag" x:Name="Wednesday" Margin="0, 24, 0, 0" />
+                        <Controls:DayFields DayName="Donderdag" x:Name="Thursday" Margin="0, 24, 0, 0" />
+                        <Controls:DayFields DayName="Vrijdag" x:Name="Friday" Margin="0, 24, 0, 0" />
+                        <Controls:DayFields DayName="Zaterdag" x:Name="Saturday" Margin="0, 24, 0, 0" />
+                        <Controls:DayFields DayName="Zondag" x:Name="Sunday" Margin="0, 24, 0, 0" />
+                        <Grid Width="124" Margin="0, 48, 0, 0" HorizontalAlignment="Right">
+                            <Button
+                                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                Height="50"
+                                materialDesign:ButtonAssist.CornerRadius="25"
+                                materialDesign:ButtonProgressAssist.IsIndicatorVisible="{Binding Loading}"
+                                materialDesign:ButtonProgressAssist.Value="-1"
+                                materialDesign:ButtonProgressAssist.IsIndeterminate="{Binding Loading}"
+                                Margin="0,0,0,-0.4" VerticalAlignment="Bottom" Click="Send"
+                            >
+                                <materialDesign:PackIcon Kind="EmailSend" Width="24" Height="24" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+		        </materialDesign:Card>
+	        </Grid>
+        </ScrollViewer>
+    </materialDesign:DialogHost>
 </Window>

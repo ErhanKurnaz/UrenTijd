@@ -1,5 +1,9 @@
 ﻿using System.Windows;
+using System.Globalization;
 using UrenTijd.ui;
+using System.ComponentModel;
+using System.Threading;
+using MaterialDesignThemes.Wpf;
 
 namespace UrenTijd
 {
@@ -7,8 +11,15 @@ namespace UrenTijd
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private int _workWeek;
+        private int _workYear;
+        private bool _loading = false;
+        private bool _showingError = false;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public struct TimeWindow
         {
             public System.DateTime? from;
@@ -22,12 +33,95 @@ namespace UrenTijd
             public TimeWindow working;
             public string workDescription;
             public string workType;
-            public bool worked;
+        }
+
+        public int WorkWeek
+        {
+            get
+            {
+                return _workWeek;
+            }
+            set
+            {
+                if (value != _workWeek)
+                {
+                    _workWeek = value;
+                    UpdateWeek();
+                    OnPropertyChanged("WorkWeek");
+                }
+            }
+        }
+
+        public int WorkYear
+        {
+            get
+            {
+                return _workYear;
+            }
+            set
+            {
+                if (value != _workYear)
+                {
+                    _workYear = value;
+                    UpdateWeek();
+                    OnPropertyChanged("WorkYear");
+                }
+            }
+        }
+
+        public bool Loading
+        {
+            get
+            {
+                return _loading;
+            }
+            set
+            {
+                if (value != _loading)
+                {
+                    _loading = value;
+                    OnPropertyChanged("Loading");
+                }
+            }
+        }
+
+        public bool ShowingError
+        {
+            get
+            {
+                return _showingError;
+            }
+            set
+            {
+                if (value != _showingError)
+                {
+                    _showingError = value;
+                    OnPropertyChanged("ShowingError");
+                }
+            }
         }
 
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
+            System.DateTime now = System.DateTime.Now;
+
+            var cal = CultureInfo.CurrentCulture.Calendar;
+            WorkWeek = cal.GetWeekOfYear(now, CalendarWeekRule.FirstDay, System.DayOfWeek.Monday);
+            WorkYear = cal.GetYear(now);
+        }
+
+        private void SendMail(DayFieldsStruct[] days)
+        {
+            try
+            {
+                Utils.CreateExcel(days, Utils.FirstDateOfWeekISO8601(_workYear, _workWeek));
+            }
+            catch (System.InvalidOperationException e)
+            {
+                ShowingError = true;
+            }
         }
 
         private DayFieldsStruct ConvertToDayFields(DayFields dayFields)
@@ -45,9 +139,20 @@ namespace UrenTijd
 
             dayFieldsStruct.workDescription = dayFields.WorkDescription.Text;
             dayFieldsStruct.workType = dayFields.WorkType.Text;
-            dayFieldsStruct.worked = dayFields.worked.IsEnabled;
 
             return dayFieldsStruct;
+        }
+
+        private void UpdateWeek()
+        {
+            if (_workYear != 0 && _workWeek != 0)
+            {
+                System.DateTime beginOfWeek = Utils.FirstDateOfWeekISO8601(_workYear, _workWeek);
+                System.DateTime endOfWeek = beginOfWeek.AddDays(6);
+
+                string text = string.Format("Van {0} tot {1}", beginOfWeek.ToString("dd MMM"), endOfWeek.ToString("dd MMM"));
+                workWeekBlock.Text = text;
+            }
         }
 
         private void Send(object sender, RoutedEventArgs e)
@@ -62,7 +167,24 @@ namespace UrenTijd
             days[5] = ConvertToDayFields(Saturday);
             days[6] = ConvertToDayFields(Sunday);
 
-            Utils.CreateExcel(days);
+            Thread thread = new Thread(() =>
+            {
+                this.Loading = true;
+                this.SendMail(days);
+                this.Loading = false;
+            });
+
+            thread.Start();
+        }
+
+        private void CloseDialog(object sender, RoutedEventArgs e)
+        {
+            ShowingError = false;
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
