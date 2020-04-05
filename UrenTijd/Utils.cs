@@ -9,6 +9,8 @@ using System.Reflection;
 using OfficeOpenXml;
 using static UrenTijd.MainWindow;
 using System.Globalization;
+using System.Net.Mail;
+using System.Diagnostics;
 
 namespace UrenTijd
 {
@@ -79,6 +81,24 @@ namespace UrenTijd
             Directory.CreateDirectory(tempPath);
             FileInfo excelFile = new FileInfo(tempPath + DefaultFileName);
             excel.SaveAs(excelFile);
+        }
+
+        public static void SendMail()
+        {
+            string tempFile = Environment.GetEnvironmentVariable("Temp") + @"\UrenTijd\";
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("famarif@hotmail.com"),
+                Subject = "urenstaat",
+                IsBodyHtml = false,
+                Body = "",
+            };
+
+            mailMessage.Attachments.Add(new Attachment(tempFile + DefaultFileName));
+            string fileName = tempFile + "urenstaatMessage.eml";
+
+            MailUtility.Save(mailMessage, fileName);
+            Process.Start(fileName);
         }
 
         public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)

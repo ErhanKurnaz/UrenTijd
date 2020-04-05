@@ -5,8 +5,6 @@ using System.ComponentModel;
 using System.Threading;
 using System;
 using System.IO;
-using System.Net.Mail;
-using System.Diagnostics;
 
 namespace UrenTijd
 {
@@ -126,20 +124,7 @@ namespace UrenTijd
                 ShowingError = true;
             }
 
-            string tempFile = Environment.GetEnvironmentVariable("Temp") + @"\UrenTijd\";
-            var mailMessage = new MailMessage
-            {
-                From = new MailAddress("famarif@hotmail.com"),
-                Subject = "urenstaat",
-                IsBodyHtml = false,
-                Body = "",
-            };
-
-            mailMessage.Attachments.Add(new Attachment(tempFile + Utils.DefaultFileName));
-            string fileName = tempFile + "urenstaatMessage.eml";
-
-            MailUtility.Save(mailMessage, fileName);
-            Process.Start(fileName);
+            Utils.SendMail();
         }
 
         private DayFieldsStruct ConvertToDayFields(DayFields dayFields)
@@ -202,7 +187,10 @@ namespace UrenTijd
 
         private void WindowClosed(object sender, EventArgs e)
         {
-            Directory.Delete(Environment.GetEnvironmentVariable("Temp") + @"\UrenTijd", true);
+            if (Directory.Exists(Environment.GetEnvironmentVariable("Temp") + @"\UrenTijd"))
+            {
+                Directory.Delete(Environment.GetEnvironmentVariable("Temp") + @"\UrenTijd", true);
+            }
         }
 
         protected void OnPropertyChanged(string propertyName)
