@@ -3,7 +3,10 @@ using System.Globalization;
 using UrenTijd.ui;
 using System.ComponentModel;
 using System.Threading;
-using MaterialDesignThemes.Wpf;
+using System;
+using System.IO;
+using System.Net.Mail;
+using System.Diagnostics;
 
 namespace UrenTijd
 {
@@ -118,10 +121,25 @@ namespace UrenTijd
             {
                 Utils.CreateExcel(days, Utils.FirstDateOfWeekISO8601(_workYear, _workWeek));
             }
-            catch (System.InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 ShowingError = true;
             }
+
+            string tempFile = Environment.GetEnvironmentVariable("Temp") + @"\UrenTijd\";
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("famarif@hotmail.com"),
+                Subject = "urenstaat",
+                IsBodyHtml = false,
+                Body = "",
+            };
+
+            mailMessage.Attachments.Add(new Attachment(tempFile + Utils.DefaultFileName));
+            string fileName = tempFile + "urenstaatMessage.eml";
+
+            MailUtility.Save(mailMessage, fileName);
+            Process.Start(fileName);
         }
 
         private DayFieldsStruct ConvertToDayFields(DayFields dayFields)
@@ -180,6 +198,11 @@ namespace UrenTijd
         private void CloseDialog(object sender, RoutedEventArgs e)
         {
             ShowingError = false;
+        }
+
+        private void WindowClosed(object sender, EventArgs e)
+        {
+            Directory.Delete(Environment.GetEnvironmentVariable("Temp") + @"\UrenTijd", true);
         }
 
         protected void OnPropertyChanged(string propertyName)

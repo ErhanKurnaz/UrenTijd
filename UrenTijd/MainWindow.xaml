@@ -9,6 +9,7 @@
         Title="UrenTijd" Height="450" Width="800"
         MinHeight="200"
         MinWidth="400"
+        Closed="WindowClosed"
 		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:UserControl="clr-namespace:UrenTijd.ui"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"

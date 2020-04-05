@@ -12,8 +12,10 @@ using System.Globalization;
 
 namespace UrenTijd
 {
-    class Utils
+    public static class Utils
     {
+        public static string DefaultFileName = "Urenbrief digitaal chauffeur Vroom.xlsx";
+
         static public void CreateExcel(DayFieldsStruct[] days, DateTime startOfWeek)
         {
             Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UrenTijd.assets.UrenBriefTemplate.xlsx");
@@ -73,7 +75,9 @@ namespace UrenTijd
                 sheet.Cells["J" + baseRow.ToString()].Value = day.workType;
             }
 
-            FileInfo excelFile = new FileInfo(@"C:\Users\erhan\Desktop\test.xlsx");
+            string tempPath = Environment.GetEnvironmentVariable("Temp") + @"\UrenTijd\";
+            Directory.CreateDirectory(tempPath);
+            FileInfo excelFile = new FileInfo(tempPath + DefaultFileName);
             excel.SaveAs(excelFile);
         }
 
