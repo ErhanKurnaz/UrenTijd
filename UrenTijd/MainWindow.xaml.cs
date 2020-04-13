@@ -34,6 +34,7 @@ namespace UrenTijd
             public TimeWindow working;
             public string workDescription;
             public string workType;
+            public bool hadBreak;
         }
 
         public int WorkWeek
@@ -139,6 +140,7 @@ namespace UrenTijd
 
             dayFieldsStruct.working.from = dayFields.WorkFrom.SelectedTime;
             dayFieldsStruct.working.until = dayFields.WorkUntil.SelectedTime;
+            dayFieldsStruct.hadBreak = dayFields.hadBreak.IsChecked ?? false;
 
             dayFieldsStruct.workDescription = dayFields.WorkDescription.Text;
             dayFieldsStruct.workType = dayFields.WorkType.Text;

@@ -57,7 +57,7 @@ namespace UrenTijd
 
                     double hoursBetween = difference.TotalHours;
 
-                    sheet.Cells["f" + (baseRow + 1).ToString()].Value = hoursBetween;
+                    sheet.Cells["f" + (baseRow + 1).ToString()].Value = hoursBetween - ((day.hadBreak && hoursBetween >= 1.0d) ? 1 : 0);
                 }
 
                 sheet.Cells["C" + (baseRow + 2).ToString()].Value = day.workDescription;
